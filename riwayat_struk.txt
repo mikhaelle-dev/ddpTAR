@@ -1,0 +1,38 @@
+=====================================
+              STRUK                 
+=====================================
+Nota ID : 1
+Tanggal : 2025-11-05 19:45:11
+Alamat  : Toko Meong - Jalan Kenangan No.11, Bandung
+-------------------------------------
+Aqua 600ml           x 2 Rp 8000
+Teh Botol Sosro      x 3 Rp 15000
+-------------------------------------
+SUBTOTAL   : Rp 23000
+DISKON 5% : Rp 1150
+PPN 10%    : Rp 2185
+GRAND TOTAL: Rp 24035
+DIBAYAR    : Rp 25000
+KEMBALIAN  : Rp 965
+METODE     : CASH
+=====================================
+
+=====================================
+              STRUK                 
+=====================================
+Nota ID : 1
+Tanggal : 2025-11-05 19:47:15
+Alamat  : Toko Meong - Jl. Surya No.21, Surabaya
+-------------------------------------
+Susu Beruang         x 2 Rp 22000
+Roti Tawar           x 4 Rp 60000
+-------------------------------------
+SUBTOTAL   : Rp 82000
+DISKON 9% : Rp 7380
+PPN 10%    : Rp 7462
+GRAND TOTAL: Rp 82082
+DIBAYAR    : Rp 82082
+KEMBALIAN  : Rp 0
+METODE     : TRANSFER
+=====================================
+
