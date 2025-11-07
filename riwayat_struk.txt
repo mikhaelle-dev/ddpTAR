@@ -36,3 +36,78 @@ KEMBALIAN  : Rp 0
 METODE     : TRANSFER
 =====================================
 
+=====================================
+              STRUK                 
+=====================================
+Nota ID : 1
+Tanggal : 2025-11-06 18:55:57
+Alamat  : Toko Meong - Jl. Surya No.21, Surabaya
+-------------------------------------
+Aqua 600ml           x 2 Rp 8000
+-------------------------------------
+SUBTOTAL   : Rp 8000
+DISKON 8% : Rp 640
+PPN 10%    : Rp 736
+GRAND TOTAL: Rp 8096
+DIBAYAR    : Rp 8096
+KEMBALIAN  : Rp 0
+METODE     : QRIS
+=====================================
+
+=====================================
+              STRUK                 
+=====================================
+Nota ID : 1
+Tanggal : 2025-11-06 19:15:57
+Alamat  : Toko Meong - Jalan Kenangan No.11, pochinki
+-------------------------------------
+Teh Botol Sosro      x 3 Rp 15000
+-------------------------------------
+SUBTOTAL   : Rp 15000
+DISKON 5% : Rp 750
+PPN 10%    : Rp 1425
+GRAND TOTAL: Rp 15675
+DIBAYAR    : Rp 15675
+KEMBALIAN  : Rp 0
+METODE     : TRANSFER
+=====================================
+
+=====================================
+|             STRUK                 |
+=====================================
+Nota ID : 1
+Tanggal : 2025-11-07 10:06:24
+Alamat  : Toko Meong - Jl. Aurora No.3, Antartika Basecamp
+-------------------------------------
+Indomie Goreng       x 1 Rp 3500
+Aqua 600ml           x 5 Rp 20000
+Beng-Beng            x17 Rp 51000
+-------------------------------------
+SUBTOTAL   : Rp 74500
+DISKON 9% : Rp 6705
+PPN 10%    : Rp 6780
+GRAND TOTAL: Rp 74575
+DIBAYAR    : Rp 74575
+KEMBALIAN  : Rp 0
+METODE     : TRANSFER
+=====================================
+
+=====================================
+|             STRUK                 |
+=====================================
+Nota ID : 1
+Tanggal : 2025-11-07 10:08:50
+Alamat  : Toko Meong - Jl. Surya No.21, paris
+-------------------------------------
+Aqua 600ml           x 2 Rp 8000
+Teh Botol Sosro      x 3 Rp 15000
+-------------------------------------
+SUBTOTAL   : Rp 23000
+DISKON 4% : Rp 920
+PPN 10%    : Rp 2208
+GRAND TOTAL: Rp 24288
+DIBAYAR    : Rp 24288
+KEMBALIAN  : Rp 0
+METODE     : QRIS
+=====================================
+

@@ -1,7 +1,3 @@
-// kasir_windows_full.c
-// Versi: Windows-ready (MinGW / Code::Blocks / VSCode)
-// Perubahan: semua system("clear") -> system("cls"), usleep(...) -> Sleep(ms), unistd.h dihapus
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <windows.h>
@@ -11,7 +7,6 @@
 #define MAX_PRODUK 100
 #define MAX_KERANJANG 50
 
-// =================== VARIABEL GLOBAL ===================
 char lastMetode[20];
 char tokoNama[] = "TOKO MEONG";
 char kasir [50] = "Admin";
@@ -26,7 +21,7 @@ typedef struct {
     int stok;
 } Produk;
 
-/* Inisialisasi produk awal (beberapa contoh) */
+
 Produk daftarProduk[MAX_PRODUK] = {
     {"Indomie Goreng", 3500, 50},
     {"Aqua 600ml", 4000, 40},
@@ -40,7 +35,7 @@ Produk daftarProduk[MAX_PRODUK] = {
     {"Susu Beruang", 11000, 50}
 };
 
-int jumlahProduk = 10; // jumlah produk yang valid saat ini
+int jumlahProduk = 10; 
 
 typedef struct {
     Produk item;
@@ -51,7 +46,7 @@ KeranjangItem keranjang[MAX_KERANJANG];
 int jumlahKeranjang = 0;
 float totalBelanja = 0.0f;
 
-// Untuk struk terakhir
+
 char lastStrukText[8192] = "";
 float lastSubtotal = 0.0f;
 int lastDiscPercent = 0;
@@ -59,12 +54,12 @@ float lastDiskon = 0.0f;
 float lastPpn = 0.0f;
 float lastGrandTotal = 0.0f;
 
-// =================== PROTOTYPE / UTIL ===================
+
 void clear_input_buffer(void);
 const char *random_address(void);
 void save_struk_to_file(const char *filename, const char *struktext);
 void tampilkan_struk_dari_text(const char *text);
-void loadingawal_centered(const char *text);
+void loadingawal_tengah(const char *text);
 void loadingawal_before_login(void);
 void menu1(void);
 int loginmasuk(void);
@@ -80,11 +75,10 @@ void hapusDariKeranjang_menu(void);
 void pembayaran(void);
 void cetakStrukAndSave(const char *buffer);
 
-// menu kasir
+
 void menuKasir(void);
 void lihatRiwayatFile(void);
 
-// util implementations
 void clear_input_buffer() {
     int c;
     while ((c = getchar()) != '\n' && c != EOF) {}
@@ -92,10 +86,10 @@ void clear_input_buffer() {
 
 const char *random_address() {
     static const char *addresses[] = {
-        "Toko Meong - Diponegoro No.6, Medan",
-        "Toko Meong - Jalan Kenangan No.11, Bandung",
-        "Toko Meong - Jl. Pelangi No.9, Jakarta",
-        "Toko Meong - Jl. Surya No.21, Surabaya",
+        "Toko Meong - Diponegoro No.6, pochinki",
+        "Toko Meong - Jalan Kenangan No.11, moniyan",
+        "Toko Meong - Jl. Pelangi No.9, halmahera",
+        "Toko Meong - Jl. Surya No.21, paris",
         "Toko Meong - Jl. Aurora No.3, Antartika Basecamp"
     };
     int n = sizeof(addresses) / sizeof(addresses[0]);
@@ -116,29 +110,31 @@ void tampilkan_struk_dari_text(const char *text) {
     getchar();
 }
 
-// =================== LOADING ===================
-void loadingawal_centered(const char *text) {
+
+void loadingawal_tengah(const char *text) {
     system("cls");
-    for (int i = 0; i < 6; ++i) printf("\n");
-    printf("\t\t==========================================\n");
+    system("color 0b");
+    for (int i = 0; i < 3; ++i) printf("\n");
+    printf("==========================================\n");
+    printf("||                                      ||\n");
     char buf[40];
     snprintf(buf, sizeof(buf), "%s", text);
-    printf("\t\t||  %-34s  ||\n", buf);
-    printf("\t\t==========================================\n");
+    printf("||  %-34s  ||\n", buf);
     for (int i = 0; i <= 50; i++) {
-        printf("\r\t\t      LOADING : %3d%%", i * 2);
+        printf("\r||            LOADING : %3d%%            ||", i * 2);
         fflush(stdout);
-        Sleep(10); // ~10000us -> 10ms
+        Sleep(20); 
     }
-    printf("\n\t\t      SELESAI! Tekan Enter...");
+    printf("\n||                                      ||");
+    printf("\n==========================================\n");
+    printf("\n          SELESAI! Tekan Enter...");
     getchar();
 }
 
 void loadingawal_before_login(void) {
-    loadingawal_centered("LOADING TOKO MEONG...");
+    loadingawal_tengah("        LOADING TOKO MEONG   ");
 }
 
-// =================== MENU LOGIN ===================
 void menu1() {
     system("cls");
     printf("\n\n\n ==========================================\n");
@@ -172,7 +168,7 @@ int loginmasuk() {
     char user[50], pass[50];
     system("cls");
     printf("\n\n ==========================================\n");
-    printf(" ||              LOGIN AKUN             ||\n");
+    printf(" ||             LOGIN AKUN               ||\n");
     printf(" ==========================================\n");
 
     printf(" USERNAME : ");
@@ -194,33 +190,33 @@ int loginmasuk() {
     }
 }
 
-// =================== PRODUK ===================
+
 void tampilkanProduk() {
     system("cls");
-    printf("=====================================\n");
-    printf("        DAFTAR PRODUK TOKO MEONG     \n");
-    printf("=====================================\n");
+    printf("=======================================================\n");
+    printf("||              DAFTAR PRODUK TOKO MEONG             ||\n");
+    printf("=======================================================\n");
     for (int i = 0; i < jumlahProduk; i++) {
-        if (strlen(daftarProduk[i].nama) == 0) continue; // skip yang sudah dihapus
-        printf("%2d. %-20s Rp %8.0f | Stok: %3d\n",
+        if (strlen(daftarProduk[i].nama) == 0) continue; 
+        printf("|| %2d. %-20s Rp %8.0f | Stok: %3d  ||\n",
                i + 1, daftarProduk[i].nama, daftarProduk[i].harga, daftarProduk[i].stok);
     }
-    printf("=====================================\n");
+    printf("=======================================================\n");
     printf("Tekan Enter untuk kembali...");
     getchar();
 }
 
 void tampilkanProduk2() {
     system("cls");
-    printf("=====================================\n");
-    printf("        DAFTAR PRODUK TOKO MEONG     \n");
-    printf("=====================================\n");
+    printf("=======================================================\n");
+    printf("||              DAFTAR PRODUK TOKO MEONG             ||\n");
+    printf("=======================================================\n");
     for (int i = 0; i < jumlahProduk; i++) {
         if (strlen(daftarProduk[i].nama) == 0) continue;
-        printf("%2d. %-20s Rp %8.0f | Stok: %3d\n",
-               i + 1, daftarProduk[i].nama, daftarProduk[i].harga, daftarProduk[i].stok);
+        printf("|| %2d. %-20s Rp %8.0f | Stok: %3d  ||\n",
+            i + 1, daftarProduk[i].nama, daftarProduk[i].harga, daftarProduk[i].stok);
     }
-    printf("=====================================\n");
+    printf("=======================================================\n");
 }
 
 void editProduk() {
@@ -231,53 +227,50 @@ void editProduk() {
 
     while (1) {
         system("cls");
-        printf("=====================================\n");
-        printf("         MENU EDIT PRODUK            \n");
-        printf("=====================================\n");
-        printf("1. Lihat Produk\n");
-        printf("2. Ubah Produk\n");
-        printf("3. Tambah Produk Baru\n");
-        printf("4. Hapus Produk\n");
-        printf("5. Kembali\n");
-        printf("=====================================\n");
+        printf("=======================================\n");
+        printf("||           MENU EDIT PRODUK        ||\n");
+        printf("=======================================\n");
+        printf("|| 1. Lihat Produk                   ||\n");
+        printf("|| 2. Ubah Produk                    ||\n");
+        printf("|| 3. Tambah Produk Baru             ||\n");
+        printf("|| 4. Hapus Produk                   ||\n");
+        printf("|| 5. Kembali                        ||\n");
+        printf("=======================================\n");
         printf("Pilih menu: ");
         if (scanf("%d", &pilih) != 1) {
             clear_input_buffer();
             printf("Input invalid. Kembali ke menu edit...\n");
-            Sleep(150); // usleep(150000)
+            Sleep(150); 
             continue;
         }
         clear_input_buffer();
 
         if (pilih == 1) {
-            // Lihat Produk -> tampilkan daftar seperti gambar 2 (tanpa pause paksa)
             system("cls");
-            printf("=====================================\n");
-            printf("        DAFTAR PRODUK TOKO MEONG     \n");
-            printf("=====================================\n");
+printf("=======================================================\n");
+printf("||              DAFTAR PRODUK TOKO MEONG             ||\n");
+printf("=======================================================\n");
             for (int i = 0; i < jumlahProduk; i++) {
                 if (strlen(daftarProduk[i].nama) == 0) continue;
-                printf("%2d. %-20s Rp %8.0f | Stok: %3d\n",
-                       i + 1, daftarProduk[i].nama, daftarProduk[i].harga, daftarProduk[i].stok);
+                printf("|| %2d. %-20s Rp %8.0f | Stok: %3d  ||\n",
+                    i + 1, daftarProduk[i].nama, daftarProduk[i].harga, daftarProduk[i].stok);
             }
-            printf("=====================================\n");
-            // beri kesempatan lihat lalu langsung kembali ke menu (tidak memaksa Enter kecuali user mau)
+printf("=======================================================\n");
             printf("Tekan Enter untuk kembali ke MENU EDIT PRODUK...");
             getchar();
             continue;
         }
         else if (pilih == 2) {
-            // Ubah Produk -> tampilkan daftar lalu minta nomor
             system("cls");
-            printf("=====================================\n");
-            printf("        DAFTAR PRODUK TOKO MEONG     \n");
-            printf("=====================================\n");
+printf("=======================================================\n");
+printf("||              DAFTAR PRODUK TOKO MEONG             ||\n");
+printf("=======================================================\n");
             for (int i = 0; i < jumlahProduk; i++) {
                 if (strlen(daftarProduk[i].nama) == 0) continue;
-                printf("%2d. %-20s Rp %8.0f | Stok: %3d\n",
-                       i + 1, daftarProduk[i].nama, daftarProduk[i].harga, daftarProduk[i].stok);
+                printf("|| %2d. %-20s Rp %8.0f | Stok: %3d  ||\n",
+                    i + 1, daftarProduk[i].nama, daftarProduk[i].harga, daftarProduk[i].stok);
             }
-            printf("=====================================\n");
+printf("=======================================================\n");
             printf("Masukkan nomor produk yang ingin diedit (99 = kembali): ");
             if (scanf("%d", &kode) != 1) { clear_input_buffer(); printf("Input invalid\n"); Sleep(100); continue; }
             clear_input_buffer();
@@ -289,11 +282,11 @@ void editProduk() {
                 continue;
             }
 
-            // tampilkan sub-menu edit untuk produk terpilih
+           
             while (1) {
                 system("cls");
                 printf("=====================================\n");
-                printf("     EDIT PRODUK: %s\n", daftarProduk[kode - 1].nama);
+                printf("|     EDIT PRODUK: %s               |\n", daftarProduk[kode - 1].nama);
                 printf("=====================================\n");
                 printf("1. Ubah Nama\n");
                 printf("2. Ubah Harga\n");
@@ -325,7 +318,7 @@ void editProduk() {
                     printf("Stok berhasil diubah!\n");
                     Sleep(100);
                 } else if (pilih == 4) {
-                    break; // kembali ke MENU EDIT PRODUK
+                    break; 
                 } else {
                     printf("Pilihan tidak valid.\n");
                     Sleep(100);
@@ -333,7 +326,7 @@ void editProduk() {
             }
         }
         else if (pilih == 3) {
-            // Tambah Produk Baru
+            
             if (jumlahProduk >= MAX_PRODUK) {
                 printf("Kapasitas penuh!\n");
                 Sleep(700);
@@ -354,17 +347,17 @@ void editProduk() {
             Sleep(700);
         }
         else if (pilih == 4) {
-            // Hapus Produk
+           
             system("cls");
-            printf("=====================================\n");
-            printf("        DAFTAR PRODUK TOKO MEONG     \n");
-            printf("=====================================\n");
+printf("=======================================================\n");
+printf("||              DAFTAR PRODUK TOKO MEONG             ||\n");
+printf("=======================================================\n");
             for (int i = 0; i < jumlahProduk; i++) {
                 if (strlen(daftarProduk[i].nama) == 0) continue;
-                printf("%2d. %-20s Rp %8.0f | Stok: %3d\n",
-                       i + 1, daftarProduk[i].nama, daftarProduk[i].harga, daftarProduk[i].stok);
+                printf("|| %2d. %-20s Rp %8.0f | Stok: %3d  ||\n",
+        i + 1, daftarProduk[i].nama, daftarProduk[i].harga, daftarProduk[i].stok);
             }
-            printf("=====================================\n");
+printf("=======================================================\n");
             printf("\nMasukkan nomor produk yang ingin dihapus: ");
             if (scanf("%d", &kode) != 1) { clear_input_buffer(); printf("Input invalid\n"); Sleep(100); continue; }
             clear_input_buffer();
@@ -373,11 +366,11 @@ void editProduk() {
                 Sleep(700);
                 continue;
             }
-            // geser array untuk hapus
+            
             for (int i = kode - 1; i < jumlahProduk - 1; i++) {
                 daftarProduk[i] = daftarProduk[i + 1];
             }
-            // kosongkan last slot just in case
+          
             strcpy(daftarProduk[jumlahProduk - 1].nama, "");
             daftarProduk[jumlahProduk - 1].harga = 0;
             daftarProduk[jumlahProduk - 1].stok = 0;
@@ -386,7 +379,7 @@ void editProduk() {
             Sleep(700);
         }
         else if (pilih == 5) {
-            // Kembali ke menu utama
+           
             return;
         }
         else {
@@ -396,7 +389,7 @@ void editProduk() {
     }
 }
 
-// =================== TAMBAH KERANJANG ===================
+
 void tambahkeranjang() {
     int kode, qty;
     char lagi = 'n';
@@ -444,7 +437,7 @@ void tambahkeranjang() {
     } while (lagi == 'y' || lagi == 'Y');
 }
 
-// =================== LIHAT KERANJANG & OPERASI (hapus item dll) ===================
+
 void hapusDariKeranjang_menu() {
     if (jumlahKeranjang == 0) {
         printf("Keranjang kosong!\n");
@@ -462,7 +455,7 @@ void hapusDariKeranjang_menu() {
         return;
     }
 
-    // tampilkan qty dan opsi
+    
     int currentQty = keranjang[hapus - 1].qty;
     printf("Produk: %s | Jumlah: %d\n", keranjang[hapus - 1].item.nama, currentQty);
     printf("1. Hapus seluruh item\n2. Kurangi sejumlah item\nPilih: ");
@@ -471,7 +464,7 @@ void hapusDariKeranjang_menu() {
     clear_input_buffer();
 
     if (opsi == 1) {
-        // kembalikan stok ke daftarProduk
+        
         for (int p = 0; p < jumlahProduk; ++p) {
             if (strlen(daftarProduk[p].nama) == 0) continue;
             if (strcmp(daftarProduk[p].nama, keranjang[hapus - 1].item.nama) == 0) {
@@ -493,10 +486,10 @@ void hapusDariKeranjang_menu() {
             printf("Jumlah tidak valid. Gunakan opsi Hapus seluruh jika mau menghapus semua.\n");
             return;
         }
-        // kurangi qty
+      
         keranjang[hapus - 1].qty -= kurang;
         totalBelanja -= keranjang[hapus - 1].item.harga * kurang;
-        // kembalikan stok setara reduction
+       
         for (int p = 0; p < jumlahProduk; ++p) {
             if (strlen(daftarProduk[p].nama) == 0) continue;
             if (strcmp(daftarProduk[p].nama, keranjang[hapus - 1].item.nama) == 0) {
@@ -510,7 +503,7 @@ void hapusDariKeranjang_menu() {
     }
 }
 
-// lihat keranjang & pilihan bayar/hapus/kembali
+
 void lihatKeranjangbayar() {
     int pilih;
     if (jumlahKeranjang == 0) {
@@ -523,11 +516,11 @@ void lihatKeranjangbayar() {
     while (1) {
         system("cls");
         printf("=====================================\n");
-        printf("             ISI KERANJANG ANDA      \n");
+        printf("||        ISI KERANJANG ANDA       ||\n");
         printf("=====================================\n");
 
         for (int i = 0; i < jumlahKeranjang; i++) {
-            printf("%d. %-20s x%d  Rp %.0f\n",
+            printf("%d. %-20s x%d  Rp %.0f \n",
                 i + 1,
                 keranjang[i].item.nama,
                 keranjang[i].qty,
@@ -553,16 +546,15 @@ void lihatKeranjangbayar() {
     }
 }
 
-// =================== CETAK STRUK (pakai buffer dari pembayaran) ===================
+
 void cetakStrukAndSave(const char *buffer) {
-    // tampilkan buffer di layar
+  
     system("cls");
     printf("%s", buffer);
 
-    // simpan ke file riwayat_struk.txt (append) di working dir Windows
     save_struk_to_file("riwayat_struk.txt", buffer);
 
-    // simpan ke lastStrukText (untuk menu "Struk Terakhir")
+
     strncpy(lastStrukText, buffer, sizeof(lastStrukText) - 1);
     lastStrukText[sizeof(lastStrukText) - 1] = '\0';
 
@@ -573,7 +565,6 @@ void cetakStrukAndSave(const char *buffer) {
     getchar();
 }
 
-// =================== PEMBAYARAN (dengan simpan struk & lastStruk) ===================
 void pembayaran() {
     if (jumlahKeranjang == 0) {
         printf("Keranjang kosong! Tekan Enter untuk kembali...");
@@ -581,19 +572,19 @@ void pembayaran() {
         return;
     }
 
-    // hitung subtotal
+
     float subtotal = 0.0f;
     for (int i = 0; i < jumlahKeranjang; ++i)
         subtotal += keranjang[i].item.harga * keranjang[i].qty;
 
-    // discount random 3-10%
-    int discPercent = (rand() % 8) + 3; // 3..10
+  
+    int discPercent = (rand() % 8) + 3; 
     float diskon = subtotal * discPercent / 100.0f;
     float taxable = subtotal - diskon;
     float ppn = taxable * 0.10f;
     float grandTotal = taxable + ppn;
 
-    // simpan ke global supaya struk konsisten
+    
     lastSubtotal = subtotal;
     lastDiscPercent = discPercent;
     lastDiskon = diskon;
@@ -607,13 +598,13 @@ void pembayaran() {
     while (1) {
         system("cls");
         printf("=====================================\n");
-        printf("              PEMBAYARAN             \n");
+        printf("||            PEMBAYARAN           ||\n");
         printf("=====================================\n");
-        printf("Subtotal   : Rp %.0f\n", subtotal);
-        printf("Diskon %d%% : Rp %.0f\n", discPercent, diskon);
-        printf("PPN 10%%    : Rp %.0f\n", ppn);
+        printf(" Subtotal   : Rp %.0f           \n", subtotal);
+        printf(" Diskon %d%%  : Rp %.0f            \n", discPercent, diskon);
+        printf(" PPN 10%%    : Rp %.0f            \n", ppn);
         printf("=====================================\n");
-        printf("GRAND TOTAL: Rp %.0f\n", grandTotal);
+        printf(" GRAND TOTAL: Rp %.0f               \n", grandTotal);
         printf("=====================================\n");
         printf("1. QRIS\n2. CASH\n3. TRANSFER\n4. BATAL BAYAR\n");
         printf("Pilih metode: ");
@@ -637,7 +628,7 @@ void pembayaran() {
         else if (pilihMetode == 3) { strcpy(namametode, "TRANSFER"); }
 
         if (pilihMetode == 2) {
-            // CASH: minta input nominal
+            
             printf("Masukkan nominal pembayaran: Rp ");
             if (scanf("%f", &bayar) != 1) { clear_input_buffer(); printf("Input invalid\n"); Sleep(100); continue; }
             clear_input_buffer();
@@ -645,27 +636,24 @@ void pembayaran() {
             if (bayar < grandTotal) {
                 printf("Uang kurang! Tekan Enter untuk memilih metode lagi...");
                 getchar();
-                continue; // kembali ke pilih metode
+                continue; 
             }
         } else {
-            // QRIS & TRANSFER otomatis dianggap 'lunas'
+       
             bayar = grandTotal;
         }
 
         float kembalian = bayar - grandTotal;
 
-        // simpan last transaksi
         strncpy(lastMetode, namametode, sizeof(lastMetode)-1);
         lastMetode[sizeof(lastMetode)-1]=0;
         lastBayar = bayar;
         lastKembalian = kembalian;
         adaTransaksi = 1;
 
-        // juga isi global 'metode' supaya konsisten bila diperlukan
         strncpy(metode, namametode, sizeof(metode)-1);
         metode[sizeof(metode)-1] = '\0';
 
-        // build struk ke buffer (sehingga bisa disimpan dan ditampilkan lagi)
         time_t t = time(NULL);
         struct tm tm = *localtime(&t);
         char waktu_str[64];
@@ -677,7 +665,7 @@ FILE *f = fopen("riwayat_struk.txt", "a");
 if (!f) return;
 
 fprintf(f, "=====================================\n");
-fprintf(f, "              STRUK                 \n");
+fprintf(f, "|             STRUK                 |\n");
 fprintf(f, "=====================================\n");
 fprintf(f, "Nota ID : %d\n", notaID);
 fprintf(f, "Tanggal : %s\n", waktu_str);
@@ -703,10 +691,10 @@ fprintf(f, "=====================================\n\n");
 
 fclose(f);
 
-// tampilkan di layar juga
+
 system("cls");
 printf("=====================================\n");
-printf("              STRUK                 \n");
+printf("|             STRUK                 |\n");
 printf("=====================================\n");
 printf("Nota ID : %d\n", notaID);
 printf("Tanggal : %s\n", waktu_str);
@@ -733,20 +721,20 @@ printf("Struk juga telah disimpan ke 'riwayat_struk.txt'\n");
 printf("Tekan Enter untuk kembali...");
 getchar();
 
-// increment notaID for next transaction
+
 notaID++;
 
-// reset keranjang & total (lakukan setelah cetak & simpan)
 jumlahKeranjang = 0;
 totalBelanja = 0.0f;
 
 return;
 
 
-        // increment notaID for next transaction
+      
         notaID++;
 
-        // reset keranjang & total (lakukan setelah cetak & simpan)
+      
+        
         jumlahKeranjang = 0;
         totalBelanja = 0.0f;
 
@@ -754,7 +742,6 @@ return;
     }
 }
 
-// =================== RIWAYAT FILE ===================
 void lihatRiwayatFile(void) {
     system("cls");
     FILE *file = fopen("riwayat_struk.txt", "r");
@@ -774,22 +761,21 @@ void lihatRiwayatFile(void) {
     getchar();
 }
 
-// =================== MENU KASIR ===================
 void menuKasir() {
     int pilih;
     while (1) {
         system("cls");
-        printf("=====================================\n");
-        printf("         MENU KASIR - TOKO MEONG     \n");
-        printf("=====================================\n");
-        printf("1. Lihat Produk\n");
-        printf("2. Edit Produk\n");
-        printf("3. Tambah Produk ke Keranjang\n");
-        printf("4. Lihat Keranjang & Bayar\n");
-        printf("5. Struk Terakhir\n");
-        printf("6. Lihat Riwayat File\n");
-        printf("7. Logout\n");
-        printf("=====================================\n");
+        printf("=======================================\n");
+        printf("||      MENU KASIR - TOKO MEONG      ||\n");
+        printf("=======================================\n");
+        printf("|| 1. Lihat Produk                   ||\n");
+        printf("|| 2. Edit Produk                    ||\n");
+        printf("|| 3. Tambah Produk ke Keranjang     ||\n");
+        printf("|| 4. Lihat Keranjang & Bayar        ||\n");
+        printf("|| 5. Struk Terakhir                 ||\n");
+        printf("|| 6. Lihat Riwayat File             ||\n");
+        printf("|| 7. Logout                         ||\n"); 
+        printf("=======================================\n");
         printf("Pilih menu: ");
         if (scanf("%d", &pilih) != 1) { clear_input_buffer(); printf("Input invalid\n"); Sleep(100); continue; }
         clear_input_buffer();
@@ -829,9 +815,9 @@ void menuKasir() {
     }
 }
 
-// =================== MAIN ===================
+
 int main() {
-    srand((unsigned int)time(NULL)); // random untuk alamat  diskon
+    srand((unsigned int)time(NULL)); 
 
     loadingawal_before_login();
 
@@ -857,9 +843,3 @@ int main() {
 
     return 0;
 }
-
-
-// git add .
-// git commit -m "Update"
-// git branch
-//git push origin main
