@@ -59,8 +59,7 @@ void clear_input_buffer(void);
 const char *random_address(void);
 void save_struk_to_file(const char *filename, const char *struktext);
 void tampilkan_struk_dari_text(const char *text);
-void loadingawal_tengah(const char *text);
-void loadingawal_before_login(void);
+
 void menu1(void);
 int loginmasuk(void);
 void author(void);
@@ -116,7 +115,6 @@ void loadingawal_tengah(const char *text) {
     system("color 0b");
     for (int i = 0; i < 3; ++i) printf("\n");
     printf("==========================================\n");
-    printf("||                                      ||\n");
     char buf[40];
     snprintf(buf, sizeof(buf), "%s", text);
     printf("||  %-34s  ||\n", buf);
@@ -127,13 +125,68 @@ void loadingawal_tengah(const char *text) {
     }
     printf("\n||                                      ||");
     printf("\n==========================================\n");
-    printf("\n          SELESAI! Tekan Enter...");
-    getchar();
+    printf("\n         SELESAI! Tekan Enter...");
+    getchar ();
+
 }
 
-void loadingawal_before_login(void) {
-    loadingawal_tengah("        LOADING TOKO MEONG   ");
+
+
+
+
+
+
+void loadingawal_tengah2(const char *text) {
+    system("cls");
+    system("color 0b");
+    for (int i = 0; i < 3; ++i) printf("\n");
+    printf("==========================================\n");
+    char buf[40];
+    snprintf(buf, sizeof(buf), "%s", text);
+    printf("||  %-34s  ||\n", buf);
+    for (int i = 0; i <= 50; i++) {
+        printf("\r||            LOADING : %3d%%            ||", i * 2);
+        fflush(stdout);
+        Sleep(40); 
+    }
+    printf("\n||                                      ||");
+    printf("\n==========================================\n");
+    printf("\n         SELESAI! Tekan Enter...");
+
 }
+
+
+
+
+
+void keluar_program(const char *text) {
+    system("cls");
+    system("color 0b");
+    for (int i = 0; i < 3; ++i) printf("\n");
+
+    printf("==========================================\n");
+    printf("||                                      ||\n");
+    printf("||              TERIMAKASIH             ||\n");
+    printf("||    SUDAH MENGGUNAKAN PROGRAM KAMI    ||\n");
+    char buf[40];
+    snprintf(buf, sizeof(buf), "%s", text);
+    printf("||  %-34s  ||\n", buf);
+    for (int i = 0; i <= 50; i++) {
+        printf("\r||            LOADING : %3d%%            ||", i * 2);
+        fflush(stdout);
+        Sleep(40); 
+    }
+    printf("\n||                                      ||\n");
+    printf("==========================================\n");
+    printf("\n         SELESAI! Tekan Enter...");
+}
+
+
+
+
+
+
+
 
 void menu1() {
     system("cls");
@@ -181,7 +234,7 @@ int loginmasuk() {
 
     if (strcmp(user, "admin") == 0 && strcmp(pass, "123") == 0) {
         printf("\n LOGIN BERHASIL! Tekan Enter untuk lanjut...");
-        getchar();
+        loadingawal_tengah2 ("");
         return 1;
     } else {
         printf("\n LOGIN GAGAL! Tekan Enter untuk kembali...");
@@ -805,7 +858,7 @@ void menuKasir() {
                 lihatRiwayatFile();
                 break;
             case 7:
-                printf("Logout berhasil. Tekan Enter...");
+            keluar_program("");
                 getchar();
                 return;
             default:
@@ -819,7 +872,7 @@ void menuKasir() {
 int main() {
     srand((unsigned int)time(NULL)); 
 
-    loadingawal_before_login();
+loadingawal_tengah("");
 
     int pilih;
     while (1) {
@@ -828,9 +881,8 @@ int main() {
         clear_input_buffer();
 
         if (pilih == 1) {
-            if (loginmasuk()) menuKasir();
-        } else if (pilih == 2) {
-            printf("Keluar program...\n");
+            if (loginmasuk())  menuKasir();
+        } else if (pilih == 2) {  keluar_program("");
             break;
         } else if (pilih == 3) {
             author();
